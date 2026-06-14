@@ -1,0 +1,10 @@
+# Artefacts WSL/Windows
+*:Zone.Identifier
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.vscode/
+.idea/
