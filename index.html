@@ -203,6 +203,7 @@
     display:flex;align-items:center;justify-content:center;
   }
   .boat-photo .sea-bg{position:absolute;inset:0}
+  .boat-photo .boat-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .boat-photo svg.vessel{position:relative;width:58%;opacity:.42;color:#0a1b27}
   .boat-photo .soon{
     position:absolute;bottom:0;left:0;right:0;text-align:center;
@@ -497,17 +498,19 @@
 
 <script>
   /* ====== DONNÉES (valeurs fictives — à modifier librement) ====== */
+  // photo : nom du fichier dans le dossier images/ (ex. "images/thalassa-aurora.jpg").
+  //         Laisser "" pour garder le placeholder « Photographie à venir ».
   const BATEAUX = [
-    { nom:"Thalassa Aurora", type:"Yacht de croisière", etat:"neuf",     capacite:"2 500 kg", vitesse:"52 km/h", prix:"480 000 €", teinte:200 },
-    { nom:"Bezine Spirit",   type:"Vedette rapide",     etat:"occasion", capacite:"800 kg",   vitesse:"78 km/h", prix:"145 000 €", teinte:18  },
-    { nom:"Mistral d'Argent",type:"Voilier",            etat:"neuf",     capacite:"1 200 kg", vitesse:"34 km/h", prix:"320 000 €", teinte:165 },
-    { nom:"Léviathan",       type:"Catamaran",          etat:"occasion", capacite:"6 000 kg", vitesse:"45 km/h", prix:"610 000 €", teinte:210 }
+    { nom:"Thalassa Aurora", type:"Bateau de Pêche",    etat:"neuf",     capacite:"4 000 kg", vitesse:"46 km/h", prix:"480 000 €", teinte:200, photo:"" },
+    { nom:"Bezine Spirit",   type:"Vedette rapide",     etat:"neuf",     capacite:"800 kg",   vitesse:"78 km/h", prix:"145 000 €", teinte:18,  photo:"" },
+    { nom:"Mistral d'Argent",type:"Voilier",            etat:"neuf",     capacite:"1 200 kg", vitesse:"34 km/h", prix:"320 000 €", teinte:165, photo:"" },
+    { nom:"Fast Daemon",     type:"Jet Ski",            etat:"occasion", capacite:"6 000 kg", vitesse:"45 km/h", prix:"610 000 €", teinte:210, photo:"" }
   ];
 
   const CONTACTS = [
-    { nom:"Gérard-Michel Thao", role:"Direction",  num:"06 12 34 56 78" },
-    { nom:"Étienne Thao",       role:"Commercial",  num:"06 23 45 67 89" },
-    { nom:"Alain Thao",         role:"Ferry & logistique", num:"06 34 56 78 90" }
+    { nom:"Gérard-Michel Thao", role:"Direction",  num:"06 39 21 89 67" },
+    { nom:"Étienne Thao",       role:"Commercial",  num:"06 25 70 29 13" },
+    { nom:"Alain Thao",         role:"Ferry & logistique", num:"06 31 61 08 74" }
   ];
 
   /* SVG silhouette de bateau pour les placeholders photo */
@@ -524,10 +527,10 @@
   document.getElementById('fleetGrid').innerHTML = BATEAUX.map(b => `
     <article class="boat reveal">
       <div class="boat-photo">
-        <div class="sea-bg" style="background:${seaBg(b.teinte)}"></div>
-        ${VESSEL}
+        ${b.photo
+          ? `<img class="boat-img" src="${b.photo}" alt="${b.nom}" loading="lazy">`
+          : `<div class="sea-bg" style="background:${seaBg(b.teinte)}"></div>${VESSEL}<span class="soon">Photographie à venir</span>`}
         <span class="badge ${b.etat}">${b.etat === 'neuf' ? 'Neuf' : 'Occasion'}</span>
-        <span class="soon">Photographie à venir</span>
       </div>
       <div class="boat-body">
         <div class="boat-type">${b.type}</div>
